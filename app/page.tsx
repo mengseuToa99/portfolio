@@ -15,13 +15,13 @@ export default function Portfolio() {
   const [scanlinePosition, setScanlinePosition] = useState(0);
   const [hologramIntensity, setHologramIntensity] = useState(0);
   const [glitchFrame, setGlitchFrame] = useState(0);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const isScrolling = useRef(false);
-  const scrollTimeoutRef = useRef(null);
-  const imageRef = useRef(null);
-  const imageContainerRef = useRef(null);
-  const canvasRef = useRef(null);
-const animationFrameRef = useRef<number | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
@@ -31,14 +31,14 @@ const animationFrameRef = useRef<number | null>(null);
   // Holographic scanline animation
   useEffect(() => {
     if (!isMounted) return;
-    
+
     const animateScanline = () => {
       setScanlinePosition(prev => (prev + 2) % 100);
       animationFrameRef.current = requestAnimationFrame(animateScanline);
     };
-    
+
     animationFrameRef.current = requestAnimationFrame(animateScanline);
-    
+
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -49,49 +49,49 @@ const animationFrameRef = useRef<number | null>(null);
   // Hologram flicker effect
   useEffect(() => {
     if (!isMounted) return;
-    
+
     const interval = setInterval(() => {
       setHologramIntensity(Math.random() * 0.3 + 0.7);
     }, 100);
-    
+
     return () => clearInterval(interval);
   }, [isMounted]);
 
   // Glitch effect
   useEffect(() => {
     if (!isMounted || !isHovering) return;
-    
+
     const glitchInterval = setInterval(() => {
       setGlitchFrame(Math.random() * 100);
     }, 50);
-    
+
     return () => clearInterval(glitchInterval);
   }, [isHovering, isMounted]);
 
   useEffect(() => {
     if (!isMounted) return;
-    
-    const handleMouseMove = (e) => {
+
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      
+
       // Holographic distortion effect
       if (imageRef.current && imageContainerRef.current) {
         const rect = imageContainerRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
+
         const angleX = (e.clientY - centerY) / 25;
         const angleY = (centerX - e.clientX) / 25;
-        
+
         const distance = Math.sqrt(
-          Math.pow(e.clientX - centerX, 2) + 
+          Math.pow(e.clientX - centerX, 2) +
           Math.pow(e.clientY - centerY, 2)
         );
-        
+
         const distortionStrength = Math.max(0, 1 - distance / 400);
         const translateX = (e.clientX - centerX) * distortionStrength * 0.15;
         const translateY = (e.clientY - centerY) * distortionStrength * 0.15;
-        
+
         imageRef.current.style.transform = `
           perspective(1200px)
           rotateX(${angleX}deg)
@@ -103,32 +103,32 @@ const animationFrameRef = useRef<number | null>(null);
       }
     };
 
-    const handleWheel = (e) => {
+    const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
-      
+
       if (contentRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = contentRef.current;
         const maxScroll = scrollWidth - clientWidth;
         const scrollSpeed = 1.5;
         const newScrollLeft = scrollLeft + (e.deltaY * scrollSpeed);
         const clampedScrollLeft = Math.max(0, Math.min(newScrollLeft, maxScroll));
-        
+
         contentRef.current.scrollLeft = clampedScrollLeft;
-        
+
         const progress = clampedScrollLeft / maxScroll;
         setScrollProgress(progress);
-        
+
         const sectionWidth = maxScroll / 2;
         const currentSectionIndex = Math.round(clampedScrollLeft / sectionWidth);
         const sections = ['about', 'experience', 'projects'];
         setActiveSection(sections[currentSectionIndex] || 'about');
-        
+
         isScrolling.current = true;
-        
+
         if (scrollTimeoutRef.current) {
           clearTimeout(scrollTimeoutRef.current);
         }
-        
+
         scrollTimeoutRef.current = setTimeout(() => {
           isScrolling.current = false;
           snapToSection(currentSectionIndex);
@@ -136,29 +136,29 @@ const animationFrameRef = useRef<number | null>(null);
       }
     };
 
-    const snapToSection = (sectionIndex) => {
+    const snapToSection = (sectionIndex: number) => {
       if (contentRef.current) {
         const { scrollWidth, clientWidth } = contentRef.current;
         const sectionWidth = (scrollWidth - clientWidth) / 2;
         const targetScrollLeft = sectionWidth * sectionIndex;
-        
+
         contentRef.current.scrollTo({
           left: targetScrollLeft,
           behavior: 'smooth'
         });
-        
+
         const progress = sectionIndex / 2;
         setScrollProgress(progress);
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    
+
     const scrollContainer = contentRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
     }
-    
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (scrollContainer) {
@@ -174,20 +174,20 @@ const animationFrameRef = useRef<number | null>(null);
     background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(29, 78, 216, 0.15), transparent 80%)`,
   };
 
-  const scrollToSection = (sectionIndex) => {
+  const scrollToSection = (sectionIndex: number) => {
     if (contentRef.current) {
       const { scrollWidth, clientWidth } = contentRef.current;
       const sectionWidth = (scrollWidth - clientWidth) / 2;
       const targetScrollLeft = sectionWidth * sectionIndex;
-      
+
       contentRef.current.scrollTo({
         left: targetScrollLeft,
         behavior: 'smooth'
       });
-      
+
       const progress = sectionIndex / 2;
       setScrollProgress(progress);
-      
+
       const sections = ['about', 'experience', 'projects'];
       setActiveSection(sections[sectionIndex]);
     }
@@ -206,7 +206,7 @@ const animationFrameRef = useRef<number | null>(null);
         <div className="w-1/2 fixed left-0 top-0 h-screen flex flex-col justify-between p-12 lg:p-20">
           <div>
             {/* Holographic Profile Image Animation */}
-            <div 
+            <div
               ref={imageContainerRef}
               className="relative mb-8 w-48 h-48 mx-auto lg:mx-0"
               onMouseEnter={() => setIsHovering(true)}
@@ -214,7 +214,7 @@ const animationFrameRef = useRef<number | null>(null);
             >
               {/* Energy field background */}
               <div className="absolute inset-0 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="absolute inset-0 opacity-60"
                   style={{
                     background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 255, 255, 0.3), transparent 70%)`,
@@ -277,7 +277,7 @@ const animationFrameRef = useRef<number | null>(null);
               {/* Holographic scanlines */}
               {isMounted && (
                 <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-                  <div 
+                  <div
                     className="absolute w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"
                     style={{
                       top: `${scanlinePosition}%`,
@@ -285,13 +285,13 @@ const animationFrameRef = useRef<number | null>(null);
                       boxShadow: '0 0 20px rgba(0, 255, 255, 0.8)'
                     }}
                   ></div>
-                  <div 
+                  <div
                     className="absolute w-full h-px bg-cyan-400 opacity-40"
                     style={{
                       top: `${(scanlinePosition + 20) % 100}%`
                     }}
                   ></div>
-                  <div 
+                  <div
                     className="absolute w-full h-px bg-cyan-400 opacity-20"
                     style={{
                       top: `${(scanlinePosition + 40) % 100}%`
@@ -301,15 +301,15 @@ const animationFrameRef = useRef<number | null>(null);
               )}
 
               {/* Main image with holographic effect */}
-              <div 
+              <div
                 ref={imageRef}
                 className="relative w-full h-full rounded-full overflow-hidden"
                 style={{
                   transformStyle: 'preserve-3d',
                   transition: 'transform 0.1s ease-out',
                   opacity: hologramIntensity,
-                  boxShadow: isHovering 
-                    ? '0 0 60px rgba(0, 255, 255, 0.8), inset 0 0 30px rgba(255, 0, 255, 0.4)' 
+                  boxShadow: isHovering
+                    ? '0 0 60px rgba(0, 255, 255, 0.8), inset 0 0 30px rgba(255, 0, 255, 0.4)'
                     : '0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 15px rgba(255, 0, 255, 0.2)',
                   border: isHovering ? '2px solid rgba(0, 255, 255, 0.6)' : '1px solid rgba(0, 255, 255, 0.3)',
                   background: 'linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%)'
@@ -320,19 +320,19 @@ const animationFrameRef = useRef<number | null>(null);
                   alt="Profile"
                   fill
                   className={`object-cover transition-all duration-700 ${imageLoaded ? 'opacity-90 scale-100' : 'opacity-0 scale-110'}`}
-                  onLoadingComplete={() => setImageLoaded(true)}
+                  onLoad={() => setImageLoaded(true)}
                   style={{
-                    filter: isHovering 
-                      ? 'contrast(1.2) brightness(1.1) saturate(1.3) hue-rotate(180deg)' 
+                    filter: isHovering
+                      ? 'contrast(1.2) brightness(1.1) saturate(1.3) hue-rotate(180deg)'
                       : 'contrast(1.1) brightness(1.05) saturate(1.1)',
                     mixBlendMode: 'screen',
                     transition: 'filter 0.3s ease-out'
                   }}
                 />
-                
+
                 {/* Holographic glitch overlay */}
                 {isMounted && isHovering && (
-                  <div 
+                  <div
                     className="absolute inset-0"
                     style={{
                       background: `linear-gradient(${glitchFrame}deg, transparent 45%, rgba(0, 255, 255, 0.2) 50%, transparent 55%)`,
@@ -410,18 +410,16 @@ const animationFrameRef = useRef<number | null>(null);
                       className="group flex items-center gap-4 text-sm uppercase tracking-widest"
                     >
                       <span
-                        className={`h-px transition-all duration-300 ${
-                          activeSection === section
-                            ? 'w-16 bg-slate-100'
-                            : 'w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-300'
-                        }`}
+                        className={`h-px transition-all duration-300 ${activeSection === section
+                          ? 'w-16 bg-slate-100'
+                          : 'w-8 bg-slate-600 group-hover:w-16 group-hover:bg-slate-300'
+                          }`}
                       />
                       <span
-                        className={`transition-colors duration-300 ${
-                          activeSection === section
-                            ? 'text-slate-100'
-                            : 'text-slate-500 group-hover:text-slate-100'
-                        }`}
+                        className={`transition-colors duration-300 ${activeSection === section
+                          ? 'text-slate-100'
+                          : 'text-slate-500 group-hover:text-slate-100'
+                          }`}
                       >
                         {section}
                       </span>
@@ -454,17 +452,17 @@ const animationFrameRef = useRef<number | null>(null);
 
         {/* Right Content - Horizontal Scroll on Vertical Scroll */}
         <div className="w-1/2 ml-auto h-screen overflow-hidden">
-          <div 
+          <div
             ref={contentRef}
             className="h-full overflow-x-auto overflow-y-hidden"
-            style={{ 
+            style={{
               scrollbarWidth: 'none',
               scrollBehavior: isScrolling.current ? 'auto' : 'smooth'
             }}
           >
-            <div 
+            <div
               className="flex h-full"
-              style={{ 
+              style={{
                 width: '300%'
               }}
             >
@@ -524,8 +522,7 @@ const animationFrameRef = useRef<number | null>(null);
                             Senior Frontend Engineer, Accessibility · Klaviyo →
                           </h3>
                           <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                            Build and maintain critical components used to construct Klaviyo's
-                            frontend, across the whole product. Work closely with cross-functional teams to implement accessible UI patterns and ensure WCAG compliance throughout the platform.
+                            Build and maintain critical components used to construct Klaviyo's frontend, across the whole product. Work closely with cross-functional teams to implement accessible UI patterns and ensure WCAG compliance throughout the platform.
                           </p>
                           <div className="flex flex-wrap gap-2">
                             {['React', 'TypeScript', 'Accessibility', 'Design Systems'].map((tech) => (
@@ -717,7 +714,7 @@ const animationFrameRef = useRef<number | null>(null);
       {/* Scroll Progress Indicator with Section Dots */}
       <div className="fixed bottom-8 right-8 flex items-center gap-3">
         <div className="w-32 h-1 bg-slate-800 rounded-full overflow-hidden">
-          <div 
+          <div
             className="h-full bg-blue-400 transition-all duration-300"
             style={{ width: `${scrollProgress * 100}%` }}
           />
@@ -727,11 +724,10 @@ const animationFrameRef = useRef<number | null>(null);
             <button
               key={section}
               onClick={() => scrollToSection(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                activeSection === section 
-                  ? 'bg-blue-400 w-8' 
-                  : 'bg-slate-600 hover:bg-slate-400'
-              }`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${activeSection === section
+                ? 'bg-blue-400 w-8'
+                : 'bg-slate-600 hover:bg-slate-400'
+                }`}
             />
           ))}
         </div>
