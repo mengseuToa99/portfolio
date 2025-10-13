@@ -22,7 +22,7 @@ export default function Portfolio() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // Changed from number | null to number to fix the TypeScript error
-  const animationFrameRef = useRef<number>(0);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function Portfolio() {
       setScanlinePosition(prev => (prev + 2) % 100);
       animationFrameRef.current = requestAnimationFrame(animateScanline);
     };
-
+    
     animationFrameRef.current = requestAnimationFrame(animateScanline);
 
     return () => {
