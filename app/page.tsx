@@ -21,7 +21,7 @@ export default function Portfolio() {
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
   const canvasRef = useRef(null);
-  const animationFrameRef = useRef(null);
+const animationFrameRef = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
