@@ -21,7 +21,8 @@ export default function Portfolio() {
   const imageRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  // Changed from number | null to number to fix the TypeScript error
+  const animationFrameRef = useRef<number>(0);
 
   // Initialize after component mounts
   useEffect(() => {
