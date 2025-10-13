@@ -22,7 +22,7 @@ export default function Portfolio() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // Using a different approach for the animation frame ref
-const animationFrameRef = useRef<number | null>(null);
+const animationFrameRef = useRef<number>(0);
 
   // Initialize after component mounts
   useEffect(() => {
@@ -40,11 +40,12 @@ const animationFrameRef = useRef<number | null>(null);
 
     animationFrameRef.current = requestAnimationFrame(animateScanline);
 
-    return () => {
-     if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
+// With this:
+return () => {
+  if (animationFrameRef.current) {
+    cancelAnimationFrame(animationFrameRef.current);
+  }
+};
   }, [isMounted]);
 
   // Hologram flicker effect
