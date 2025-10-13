@@ -22,7 +22,7 @@ export default function Portfolio() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // Using a different approach for the animation frame ref
-const animationFrameRef = useRef<number>(0);
+const animationFrameRef: React.MutableRefObject<number | null> = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
@@ -42,7 +42,7 @@ const animationFrameRef = useRef<number>(0);
 
 // With this:
 return () => {
-  if (animationFrameRef.current) {
+  if (animationFrameRef.current !== null) {
     cancelAnimationFrame(animationFrameRef.current);
   }
 };
