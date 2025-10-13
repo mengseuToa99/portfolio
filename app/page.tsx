@@ -22,7 +22,9 @@ export default function Portfolio() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // Using a different approach for the animation frame ref
-const animationFrameRef: React.MutableRefObject<number | null> = useRef<number | null>(null);
+
+// Replace this line:
+const animationFrameRef = useRef<number | null>(null) as React.MutableRefObject<number | null>;
 
   // Initialize after component mounts
   useEffect(() => {
@@ -35,10 +37,9 @@ const animationFrameRef: React.MutableRefObject<number | null> = useRef<number |
 
     const animateScanline = () => {
       setScanlinePosition(prev => (prev + 2) % 100);
-      animationFrameRef.current = requestAnimationFrame(animateScanline);
+    animationFrameRef.current = requestAnimationFrame(animateScanline) as number;
     };
-
-    animationFrameRef.current = requestAnimationFrame(animateScanline);
+animationFrameRef.current = requestAnimationFrame(animateScanline) as number;
 
 // With this:
 return () => {
