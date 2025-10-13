@@ -22,7 +22,7 @@ export default function Portfolio() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // Using a different approach for the animation frame ref
-  const animationFrameRef = useRef<number | undefined>(undefined);
+const animationFrameRef = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Portfolio() {
     animationFrameRef.current = requestAnimationFrame(animateScanline);
 
     return () => {
-      if (animationFrameRef.current !== undefined) {
+     if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
