@@ -17,11 +17,11 @@ export default function Portfolio() {
   const [glitchFrame, setGlitchFrame] = useState(0);
   const contentRef = useRef(null);
   const isScrolling = useRef(false);
-  const scrollTimeoutRef = useRef(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const imageRef = useRef(null);
   const imageContainerRef = useRef(null);
   const canvasRef = useRef(null);
-  const animationFrameRef = useRef(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Initialize after component mounts
   useEffect(() => {
