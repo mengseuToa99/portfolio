@@ -82,7 +82,7 @@ export default function Portfolio() {
                             />
                             <h1 className={`${isTablet ? 'text-4xl' : 'text-5xl'} font-bold text-slate-100 mb-4 lg:text-left`}>Tai Mengseu</h1>
                             <h2 className="text-xl text-slate-200 mb-6 lg:text-left">Web Developer</h2>
-                            <p className="text-slate-400 mb-12 max-w-sm">I build accessible, pixel-perfect digital experiences for the web.</p>
+                            <p className="text-slate-400 mb-12 max-w-sm">Dedicated Web Developer with 1 year of professional experience in Laravel framework development and backend integration.</p>
                             <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
                         </div>
                         <SocialLinks />

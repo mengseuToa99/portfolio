@@ -7,26 +7,26 @@ export function AboutSection({ isMobile, isSmallMobile }: AboutSectionProps) {
     const content = (
         <div className="space-y-6">
             <p className={`text-slate-400 leading-relaxed ${isSmallMobile ? 'text-xs' : 'text-sm'}`}>
-                I'm a developer passionate about crafting accessible, pixel-perfect user interfaces that blend thoughtful design with robust engineering. My favorite work lies at the intersection of design and development, creating experiences that not only look great but are meticulously built for performance and usability.
+               I’m a passionate developer who loves exploring new technologies and applying them to solve real-world problems. I’m highly motivated by curiosity and enjoy experimenting with new tools to create better solutions. I take pride in writing code that makes users happy — even the smallest fix that improves their experience matters to me. I’m also deeply driven by debugging; finding and solving bugs inspires me and gives me great satisfaction.
             </p>
             <p className={`text-slate-400 leading-relaxed ${isSmallMobile ? 'text-xs' : 'text-sm'}`}>
-                Currently, I'm a Senior Front-End Engineer at{' '}
-                <a href="#" className="text-slate-100 hover:text-blue-400 transition-colors duration-300 font-medium">
-                    Klaviyo
+                Currently working as a Web Developer at{' '}
+                <a href="https://arimako.com/" className="text-slate-100 hover:text-blue-400 transition-colors duration-300 font-medium">
+                    yeaksa
                 </a>
-                , specializing in accessibility. I contribute to the creation and maintenance of UI components that power Klaviyo's frontend, ensuring our platform meets web accessibility standards and best practices to deliver an inclusive user experience.
+                , specializing in developing and managing company-wide reporting systems. I design and implement effective, data-driven reports using interactive data tables to solve operational challenges and improve decision-making. My responsibilities include building and maintaining reports for sales, purchases, expenses, staff management (attendance, leave), delivery tracking, and customer management. I ensure data accuracy and consistency across the system to support business analysis and future predictions.
             </p>
-            <p className={`text-slate-400 leading-relaxed ${isSmallMobile ? 'text-xs' : 'text-sm'}`}>
+            {/* <p className={`text-slate-400 leading-relaxed ${isSmallMobile ? 'text-xs' : 'text-sm'}`}>
                 In the past, I've had the opportunity to develop software across a variety of settings — from{' '}
                 <span className="text-slate-100">advertising agencies</span> and{' '}
                 <span className="text-slate-100">large corporations</span> to{' '}
                 <span className="text-slate-100">start-ups</span> and{' '}
                 <span className="text-slate-100">small digital product studios</span>. Additionally, I also released a{' '}
                 <span className="text-slate-100">comprehensive video course</span> a few years ago, guiding learners through building a web app with the Spotify API.
-            </p>
+            </p> */}
             <p className={`text-slate-400 leading-relaxed ${isSmallMobile ? 'text-xs' : 'text-sm'}`}>
-                In my spare time, I'm usually climbing, playing tennis, hanging out with my wife and two cats, or running around Hyrule searching for{' '}
-                <span className="text-slate-100">Korok seeds</span>.
+               Beyond Laravel, I have hands-on experience with React and Next.js for frontend development, as well as practical knowledge of Git, GitHub, GitLab, and hosting services. I’m passionate about leveraging technology to solve real-world problems and continuously improving through learning and experimentation.
+                
             </p>
         </div>
     );
