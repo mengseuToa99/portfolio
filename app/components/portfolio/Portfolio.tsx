@@ -23,7 +23,12 @@ export default function Portfolio() {
     const { isSmallMobile, isMobile, isTablet, isDesktop } = useDeviceDetection();
     const mousePosition = useMousePosition();
     const { scanlinePosition, hologramIntensity, glitchFrame } = useHolographicEffects(isHovering, isMounted);
-    const { scrollProgress, activeSection, scrollToSection } = useScrollProgress(contentRef, isMobile);
+    
+    // Fix: Add a non-null assertion or check if contentRef.current exists before passing it
+    const { scrollProgress, activeSection, scrollToSection } = useScrollProgress(
+        contentRef as React.RefObject<HTMLDivElement>, 
+        isMobile
+    );
 
     useEffect(() => setIsMounted(true), []);
 
