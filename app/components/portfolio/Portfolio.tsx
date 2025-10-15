@@ -15,7 +15,7 @@ import { ExperienceSection } from './sections/ExperienceSection';
 import { ProjectsSection } from './sections/ProjectsSection';
 
 export default function Portfolio() {
-    const contentRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
     const [isHovering, setIsHovering] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
