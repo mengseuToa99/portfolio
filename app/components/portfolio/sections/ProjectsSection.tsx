@@ -10,7 +10,7 @@ const projectsData = [
         tech: ['Livewire', 'Tailwind', 'Mysql', 'Livewire'],
     },
     {
-        title: ' →',
+        title: 'Report Management System→',
         description: 'Web app for visualizing personalized Spotify data. View your top artists, tracks, and playlists, see detailed audio information, and create and save new playlists.',
         tech: ['Nextjs', 'laravel', 'Tailwind', 'Mysql'],
     },
