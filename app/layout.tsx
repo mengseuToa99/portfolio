@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Brittany Chiang | Front End Engineer",
+  title: "Tai Mengseu | Web Developer",
   description: "Portfolio clone of Brittany Chiang's website using Next.js and Tailwind CSS",
 };
 

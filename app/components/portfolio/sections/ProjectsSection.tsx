@@ -5,20 +5,20 @@ interface ProjectsSectionProps {
 
 const projectsData = [
     {
-        title: 'Build a Spotify Connected App →',
-        description: 'Video course that teaches how to build a web app with the Spotify API. Topics covered include the principles of REST APIs, user auth flows, Node, Express, React, and more.',
-        tech: ['React', 'Express', 'Spotify API', 'Node'],
+        title: 'Room Rental Management System →',
+        description: 'A system use for helping in room rentail industry help room rental owner manage their room, and renter can keep track their usages of utility.',
+        tech: ['Livewire', 'Tailwind', 'Mysql', 'Livewire'],
     },
     {
-        title: 'Spotify Profile →',
+        title: ' →',
         description: 'Web app for visualizing personalized Spotify data. View your top artists, tracks, and playlists, see detailed audio information, and create and save new playlists.',
-        tech: ['React', 'Express', 'Styled Components', 'Spotify API'],
+        tech: ['Nextjs', 'laravel', 'Tailwind', 'Mysql'],
     },
-    {
-        title: 'Halcyon Theme →',
-        description: 'A minimal, dark blue theme for VS Code, Sublime Text, Atom, and more. Available on Visual Studio Marketplace, Package Control, and Atom Package Manager.',
-        tech: ['VS Code', 'Sublime Text', 'Theme'],
-    },
+    // {
+    //     title: 'Halcyon Theme →',
+    //     description: 'A minimal, dark blue theme for VS Code, Sublime Text, Atom, and more. Available on Visual Studio Marketplace, Package Control, and Atom Package Manager.',
+    //     tech: ['VS Code', 'Sublime Text', 'Theme'],
+    // },
 ];
 
 export function ProjectsSection({ isMobile, isSmallMobile }: ProjectsSectionProps) {
